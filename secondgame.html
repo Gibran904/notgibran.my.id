@@ -47,7 +47,7 @@
     function startGame() {
       const input = document.getElementById("secretInput");
       const value = parseInt(input.value);
-      if (value >= 1 && value <= 1000) {
+      if (value >= 1 && value <= 100000) {
         secretNumber = value;
         document.getElementById("setup").classList.add("hidden");
         document.getElementById("game").classList.remove("hidden");

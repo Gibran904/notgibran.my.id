@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Tebak Angka Multiplayer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    input[type="number"] {
+      padding: 5px;
+      width: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Game Tebak Angka - Multiplayer</h1>
+
+  <div id="setup">
+    <p><strong>Player 1:</strong> Masukkan angka rahasia (1 - 100000):</p>
+    <input type="number" id="secretInput" min="1" max="1000">
+    <button onclick="startGame()">Mulai Tebakan</button>
+  </div>
+
+  <div id="game" class="hidden">
+    <p><strong>Player 2:</strong> Tebak angka dari 1 sampai 100000</p>
+    <input type="number" id="guessInput" min="1" max="100000">
+    <button onclick="checkGuess()">Tebak</button>
+    <p id="result"></p>
+    <p id="attempt"></p>
+    <button id="restartBtn" class="hidden" onclick="location.reload()">Main Lagi</button>
+  </div>
+
+  <script>
+    let secretNumber = 0;
+    let attempts = 0;
+
+    function startGame() {
+      const input = document.getElementById("secretInput");
+      const value = parseInt(input.value);
+      if (value >= 1 && value <= 1000) {
+        secretNumber = value;
+        document.getElementById("setup").classList.add("hidden");
+        document.getElementById("game").classList.remove("hidden");
+      } else {
+        alert("Masukkan angka dari 1 sampai 1000!");
+      }
+    }
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      const result = document.getElementById("result");
+      attempts++;
+
+      if (guess === secretNumber) {
+        result.innerHTML = `<strong>Selamat!</strong> Jawabannya ${secretNumber}. Kamu benar!`;
+        result.style.color = "green";
+        document.getElementById("attempt").textContent = `Jumlah percobaan: ${attempts}`;
+        document.getElementById("restartBtn").classList.remove("hidden");
+      } else if (Math.abs(guess - secretNumber) <= 10) {
+        result.textContent = guess > secretNumber ? "Salah, kelebihan dikit lagi!" : "Salah, dikit lagi naik dikit!";
+        result.style.color = "orange";
+      } else {
+        result.textContent = guess > secretNumber ? "Salah, terlalu tinggi!" : "Salah, terlalu rendah!";
+        result.style.color = "red";
+      }
+
+      document.getElementById("attempt").textContent = `Jumlah percobaan: ${attempts}`;
+    }
+  </script>
+</body>
+</html>

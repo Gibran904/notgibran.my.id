@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-57DQX32B');</script>
+<!-- End Google Tag Manager -->
+    <meta name="google-site-verification" content="jxay_hMuTl6xzKRy3NVsp1ZWd_0hVi-vQbaOEoFCW-8" />
+  <meta charset="utf-8">
+  <title>Game Tebak Angka 1-10000</title>
+
+  <!-- ✅ Google Analytics START -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RD92SPVB7K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RD92SPVB7K');
+  </script>
+  <!-- ✅ Google Analytics END -->
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { font-size: 32px; }
+    input {
+      font-size: 18px;
+      padding: 8px;
+      width: 120px;
+    }
+    button {
+      font-size: 18px;
+      padding: 8px 16px;
+      margin-left: 10px;
+    }
+    #result {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    #restartBtn {
+      display: none;
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 1em;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 600px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57DQX32B"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <h1>Game Tebak Angka</h1>
+  <p>Tebak angka dari <strong>1 sampai 10000</strong>!</p>
+
+  <input id="guessInput" type="number" min="1" max="10000" />
+  <button onclick="checkGuess()">Tebak</button>
+
+  <p id="result"></p>
+  <p id="attempts"></p>
+
+  <div id="formSection" style="display:none;">
+    <p>Masukkan Nama:</p>
+    <input id="playerName" type="text" />
+    <button onclick="submitScore()">Kirim ke Leaderboard</button>
+  </div>
+
+  <h2>🏆 Top 10 Leaderboard</h2>
+  <table id="leaderboard">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Nama</th>
+        <th>Percobaan</th>
+        <th>Waktu</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button id="restartBtn" onclick="restartGame()">Main Lagi</button>
+
+  <script>
+    let answer = Math.floor(Math.random() * 10000) + 1;
+    let tries = 0;
+    let win = false;
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      tries++;
+      let resultText = "";
+      let color = "";
+
+      if (guess === answer) {
+        resultText = `🎉 Selamat! Jawabannya ${answer}. Kamu benar!`;
+        color = "green";
+        document.getElementById("formSection").style.display = 'block';
+        document.getElementById("restartBtn").style.display = 'inline-block';
+        win = true;
+      } else {
+        const selisih = Math.abs(guess - answer);
+        if (selisih <= 10) {
+          resultText = "😬 Salah, dikit lagi!";
+          color = "orange";
+        } else if (guess > answer) {
+          resultText = "📈 Salah, kelebihan!";
+          color = "red";
+        } else {
+          resultText = "📉 Salah, kekurangan!";
+          color = "red";
+        }
+      }
+
+      document.getElementById("result").textContent = resultText;
+      document.getElementById("result").style.color = color;
+      document.getElementById("attempts").textContent = `Percobaan: ${tries}`;
+    }
+
+    function submitScore() {
+      if (!win) return;
+      const name = document.getElementById("playerName").value;
+      if (!name) return alert("Isi nama dulu!");
+      const formData = new FormData();
+      formData.append("nama", name);
+      formData.append("percobaan", tries);
+
+      fetch("https://script.google.com/macros/s/AKfycbxRkBI6EUY0Lf-g9Kxs1MbjOeTk3F4uw-D-FEwTh2bq7IX8lG7zXUyheNcI-oe4kv5W0w/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(() => {
+        alert("Berhasil dikirim!");
+        fetchLeaderboard();
+      });
+    }
+
+    function fetchLeaderboard() {
+      fetch("https://script.google.com/macros/s/AKfycbxRkBI6EUY0Lf-g9Kxs1MbjOeTk3F4uw-D-FEwTh2bq7IX8lG7zXUyheNcI-oe4kv5W0w/exec")
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#leaderboard tbody");
+          tbody.innerHTML = "";
+          const rows = data.slice(1).sort((a, b) => a[1] - b[1]).slice(0, 10);
+          rows.forEach((row, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>#${index + 1}</td>
+              <td>${row[0]}</td>
+              <td>${row[1]}</td>
+              <td>${new Date(row[2]).toLocaleString()}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    function restartGame() {
+      answer = Math.floor(Math.random() * 10000) + 1;
+      tries = 0;
+      win = false;
+      document.getElementById("guessInput").value = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("attempts").textContent = "";
+      document.getElementById("formSection").style.display = 'none';
+      document.getElementById("restartBtn").style.display = 'none';
+    }
+
+    fetchLeaderboard();
+  </script>
+
+  <p class="footer">
+    Powered by <strong>GitHub</strong>, <strong>Cloudflare</strong> and <strong>Google</strong>
+  </p>
+</body>
+</html>

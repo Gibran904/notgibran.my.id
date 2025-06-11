@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kirim Pesan Anonim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #d299c2, #fef9d7);
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+    textarea {
+      width: 90%;
+      max-width: 400px;
+      height: 150px;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      resize: none;
+    }
+    button {
+      background-color: #7b2cbf;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    a {
+      display: block;
+      margin-top: 30px;
+      color: #5a189a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kirim Pesan Anonim</h1>
+  <form action="submit.php" method="POST">
+    <textarea name="pesan" placeholder="Tulis pesan kamu di sini..." required></textarea><br>
+    <button type="submit">Kirim Pesan</button>
+  </form>
+  <a href="login.php">Lihat pesan masuk (admin)</a>
+</body>
+</html>

@@ -27,7 +27,7 @@
 
   <div id="setup">
     <p><strong>Player 1:</strong> Masukkan angka rahasia (1 - 100000):</p>
-    <input type="number" id="secretInput" min="1" max="100000">
+    <input type="number" id="secretInput" min="1" max="1000">
     <button onclick="startGame()">Mulai Tebakan</button>
   </div>
 
@@ -47,12 +47,12 @@
     function startGame() {
       const input = document.getElementById("secretInput");
       const value = parseInt(input.value);
-      if (value >= 1 && value <= 100000) {
+      if (value >= 1 && value <= 1000) {
         secretNumber = value;
         document.getElementById("setup").classList.add("hidden");
         document.getElementById("game").classList.remove("hidden");
       } else {
-        alert("Masukkan angka dari 1 sampai 100000!");
+        alert("Masukkan angka dari 1 sampai 1000!");
       }
     }
 

@@ -67,6 +67,58 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       font-size: 14px;
       color: gray;
     }
+    :root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: 0.3s ease;
+}
+
+/* Dark mode */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #eeeeee;
+}
+
+/* Switch UI */
+.switch {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
+.switch input {
+  display: none;
+}
+.slider {
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 2px;
+  left: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+input:checked + .slider {
+  background-color: #4caf50;
+}
+input:checked + .slider::before {
+  transform: translateX(26px);
+}
 	</style>
 </head>
 <body><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57DQX32B"
@@ -187,8 +239,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     fetchLeaderboard();
-  </script></p>
-
+	</script></p>
+<label class="switch">
+		<input type="checkbox" id="them-toggle">
+		<span class="slider"></span>
+	</label>
 <p class="footer">Powered by <strong>Vercel</strong>, <strong>GitHub</strong>, <strong>Cloudflare&nbsp;</strong>and <strong>Google</strong></p>
 	<a
 		href="https://api.whatsapp.com/send?text=Bisakah%20Anda%20mengalahkanku?%20Kalau%20ya,%20coba%20ini:%20https://notgibran.my.id" target="_blank">
@@ -196,5 +251,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			Share ke WhatsApp 💬
 		</button>
 	</a>
+	<script>
+  const toggle = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+      body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
 </body>
 </html>

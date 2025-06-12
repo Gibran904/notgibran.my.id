@@ -1,74 +1,1154 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="favicon-32x32.png">
-  <title>Game Tebak Angka 1-10000</title>
-  <meta name="google-site-verification" content="jxay_hMuTl6xzKRy3NVsp1ZWd_0hVi-vQbaOEoFCW-8" />
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-57DQX32B');</script>
-  <!-- End Google Tag Manager -->
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RD92SPVB7K"></script>
-  <script>
+<html lang="id"><head>
+	<link rel="icon" type="image/png" href="favicon-32x32.png" <meta="" charset="utf-8"><!-- Google Tag Manager --><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-RD92SPVB7K&amp;cx=c&amp;gtm=45He5690v9218083924za200&amp;tag_exp=101509157~103116026~103200004~103233427~103351869~103351871~104573694~104617979~104617981~104661466~104661468~104718207"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-57DQX32B"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-57DQX32B');</script><!-- End Google Tag Manager --><meta name="google-site-verification" content="jxay_hMuTl6xzKRy3NVsp1ZWd_0hVi-vQbaOEoFCW-8">
+	<title>Game Tebak Angka 1-10000</title>
+	<!-- ✅ Google Analytics START --><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-RD92SPVB7K"></script><script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-RD92SPVB7K');
-  </script>
-  <!-- End Google Analytics -->
+  </script><!-- ✅ Google Analytics END -->
+	<style type="text/css">body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { font-size: 32px; }
+    input {
+      font-size: 18px;
+      padding: 8px;
+      width: 120px;
+    }
+    button {
+      font-size: 18px;
+      padding: 8px 16px;
+      margin-left: 10px;
+    }
+    #result {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    #restartBtn {
+      display: none;
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 1em;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 600px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: gray;
+    }
+	</style>
+<style>
+    .NoTab-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0);
+      z-index: 999998;
+      pointer-events: none;
+      transition: background-color 0.2s ease;
+    }
 
-  <style>
-    /* ... [SEMUA CSS kamu sebelumnya tetap sama, gak diubah] ... */
-    /* Gak aku ulangin di sini biar gak panjang. Tapi tetap sama ya */
-  </style>
-</head>
-<body>
-  <!-- GTM noscript -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57DQX32B"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End GTM noscript -->
+    .NoTab-overlay-visible {
+      background-color: rgba(0, 0, 0, calc(var(--overlay-opacity, 0.5)));
+      pointer-events: auto;
+    }
 
-  <h1>Game Tebak Angka</h1>
-  <p>Tebak angka dari <strong>1 sampai 10000</strong>!</p>
-  <p><input id="guessInput" max="10000" min="1" type="number" /><button onclick="checkGuess()">Tebak</button></p>
-  <p id="result"></p>
-  <p id="attempts"></p>
+    .NoTab-link-tooltip {
+      position: fixed;
+      z-index: 999999;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      overflow: hidden;
+      max-width: 90vw;
+      max-height: 90vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
 
-  <div id="formSection" style="display:none;">
-    <p>Masukkan Nama:</p>
-    <input id="playerName" type="text" /><button onclick="submitScore()">Kirim ke Leaderboard</button>
-  </div>
+    .NoTab-link-tooltip-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  <h2>🏆 Top 10 Leaderboard</h2>
-  <table id="leaderboard">
-    <thead>
-      <tr><th>Rank</th><th>Nama</th><th>Percobaan</th><th>Waktu</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    .NoTab-link-tooltip-content {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+      border-radius: 12px; /* Apply border-radius here */
+      background: #fff;
+    }
 
-  <p><button id="restartBtn" onclick="restartGame()">Main Lagi</button></p>
+    /* Updated Header Styles */
+    .NoTab-link-tooltip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* 确保元素之间分布均匀 */
+      padding: 6px 8px 6px 12px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: move;
+      user-select: none;
+      height: 40px;
+      gap: 8px; /* 增加元素间距 */
+      flex-shrink: 0;
+    }
 
-  <label class="switch">
-    <input type="checkbox" id="theme-toggle">
-    <span class="slider"></span>
-  </label>
+    /* New Link Group Styles */
+    .NoTab-link-tooltip-link-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1; /* 允许占据更多空间 */
+      max-width: 70%; /* 限制最大宽度为70% */
+      min-width: 0; /* 允许压缩 */
+      border: 1px solid var(--tooltip-link-border);
+      border-radius: 16px;
+      padding: 3px 5px 3px 3px;
+      background-color: var(--tooltip-link-bg);
+      transition: border-color 0.2s;
+      overflow: hidden; /* 确保内容不会溢出 */
+    }
+    .NoTab-link-tooltip-link-group:hover {
+       border-color: var(--tooltip-link-hover-border);
+    }
 
-  <p class="footer">Powered by <strong>Vercel</strong>, <strong>GitHub</strong>, <strong>Cloudflare</strong> and <strong>Google</strong></p>
 
-  <a href="https://api.whatsapp.com/send?text=Bisakah%20Anda%20mengalahkanku?%20Kalau%20ya,%20coba%20ini:%20https://notgibran.my.id" target="_blank">
-    <button style="background-color: #25D366; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
-      Share ke WhatsApp 💬
-    </button>
-  </a>
+    /* Updated Title Styles */
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title { /* Increased specificity */
+      font-size: 13px;
+      font-weight: normal;
+      color: var(--tooltip-header-text); /* Use variable */
+      white-space: nowrap; /* 强制单行 */
+      overflow: hidden;
+      margin-left: 10px;
+      text-overflow: ellipsis; /* 超出部分显示省略号 */
+      text-decoration: none; /* Remove underline from link */
+      cursor: pointer; /* Indicate it's clickable */
+      flex: 1; /* Allow title to take space */
+      min-width: 0; /* Prevent overflow */
+      line-height: 1.4; /* Adjust line height */
+      display: block; /* 确保ellipsis生效 */
+      width: 100%; /* 确保ellipsis生效 */
+    }
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title:hover { /* Increased specificity */
+       color: #007bff; /* Change color on hover */
+    }
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title:visited { /* Increased specificity */
+      color: var(--tooltip-header-text); /* Prevent visited link color change */
+    }
 
-  <script>
+    /* Updated Actions Styles */
+    .NoTab-link-tooltip-actions {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0; /* 防止被压缩 */
+    }
+
+    /* General Action Button Styles */
+    .NoTab-link-tooltip-action {
+      background: none;
+      border: none;
+      /* font-size: 16px; /* Slightly smaller icons */ */ /* Removed font-size */
+      color: #777; /* Default icon color */
+      cursor: pointer;
+      padding: 0; /* Remove default padding */
+      line-height: 1;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; /* Fixed width */
+      height: 28px; /* Fixed height */
+      border-radius: 6px; /* Rounded corners */
+      position: relative;
+      /* Add background properties for icons */
+      background-color: #555; /* Darker default icon color */
+      mask-repeat: no-repeat;
+      mask-position: center center;
+      mask-size: 16px 16px; /* Control icon size */
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center center;
+      -webkit-mask-size: 16px 16px;
+    }
+
+    .NoTab-link-tooltip-action:hover {
+      background-color: #111; /* Darker icon color on hover */
+      color: #333; /* Darker icon color on hover */
+    }
+
+    .NoTab-link-tooltip-action.active {
+      color: #1976d2; /* Use color for the icon */
+      background-color: #007bff; /* Brighter blue for active pin */
+    }
+
+    .NoTab-link-tooltip-action.disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    /* Specific button styles with SVG masks */
+    .NoTab-link-tooltip-pin {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='none' stroke='currentColor' stroke-width='50'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='none' stroke='currentColor' stroke-width='50'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    .NoTab-link-tooltip-pin.active {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='currentColor'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='currentColor'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      /* background-color: #007bff; /* Brighter blue for active pin */ */ /* Controlled by variable now */
+    }
+
+    .NoTab-link-tooltip-refresh {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-reader-mode {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1'%3E%3C/path%3E%3Cpath d='M10 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'%3E%3C/path%3E%3Cline x1='8' y1='10' x2='17' y2='10'%3E%3C/line%3E%3Cline x1='8' y1='14' x2='17' y2='14'%3E%3C/line%3E%3Cline x1='8' y1='18' x2='12' y2='18'%3E%3C/line%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1'%3E%3C/path%3E%3Cpath d='M10 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'%3E%3C/path%3E%3Cline x1='8' y1='10' x2='17' y2='10'%3E%3C/line%3E%3Cline x1='8' y1='14' x2='17' y2='14'%3E%3C/line%3E%3Cline x1='8' y1='18' x2='12' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-open {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-close {
+      /* font-size: 20px; /* Larger close icon */ */ /* Removed font-size */
+      /* font-weight: 300; */ /* Removed font-weight */
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E"); /* Slightly thicker stroke */
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    /* Tooltip for Action Buttons */
+    .NoTab-link-tooltip-action::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 110%; /* Position above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      font-size: 11px; /* Smaller font size */
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s 0.1s, visibility 0.2s 0.1s; /* Added delay */
+      pointer-events: none;
+    }
+
+    .NoTab-link-tooltip-action:hover::after {
+      opacity: 1;
+      visibility: visible;
+      /* bottom: -25px; Adjusted position if needed */
+    }
+
+
+    .NoTab-link-tooltip-body {
+      flex: 1; /* Allow body to take remaining space */
+      display: flex;
+      flex-direction: column;
+      height: 100%; /* Ensure body fills available height */
+      width: 100%;
+      background: #fff;
+      min-height: 0; /* Prevent body from overflowing */
+    }
+
+    .NoTab-limit-message {
+      padding: 12px 16px;
+      font-size: 18px;
+    }
+
+    .NoTab-link-tooltip-summary {
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+      max-height: 150px;
+      overflow-y: auto;
+      background-color: #fafafa;
+      flex-shrink: 0; /* Prevent summary from shrinking */
+    }
+
+    .NoTab-link-tooltip-iframe-container {
+      flex: 1;
+      position: relative;
+      padding: 0 1px 1px 1px;
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .NoTab-link-tooltip-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    .NoTab-link-tooltip-reader-container {
+      flex: 1;
+      position: relative;
+      padding: 0;
+      background: var(--tooltip-bg);
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .NoTab-link-tooltip-video-container { /* 新增视频播放器容器样式 */
+      flex: 1;
+      position: relative;
+      background: var(--tooltip-bg); /* 使用变量 */
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden; /* 隐藏iframe边框带来的额外空间 */
+      display: none; /* 默认隐藏 */
+    }
+
+    .NoTab-link-tooltip-video-iframe { /* 新增视频播放器iframe样式 */
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000; /* 视频背景通常为黑色 */
+    }
+
+    .NoTab-reader-content {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: var(--tooltip-text);
+      background-color: var(--tooltip-bg);
+    }
+
+    .NoTab-reader-content h1 { 
+      font-size: 1.75em;
+      margin-top: 0;
+      margin-bottom: 0.8em;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .NoTab-reader-content .byline {
+      font-style: italic;
+      color: var(--tooltip-summary-text);
+      margin-bottom: 1.5em;
+    }
+
+    .NoTab-reader-content h2, 
+    .NoTab-reader-content h3 {
+      line-height: 1.3;
+      margin-top: 1.5em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+
+    .NoTab-reader-content h1 {
+      font-size: 1.75em;
+    }
+
+    .NoTab-reader-content h2 {
+      font-size: 1.4em;
+    }
+
+    .NoTab-reader-content h3 {
+      font-size: 1.2em;
+    }
+
+    .NoTab-reader-content p {
+      margin-bottom: 1em;
+    }
+
+    .NoTab-reader-content img {
+      max-width: 100%;
+      height: auto;
+      margin: 1em 0;
+    }
+
+    .NoTab-reader-content a {
+      color: var(--tooltip-action-active-bg);
+      text-decoration: none;
+    }
+
+    .NoTab-reader-content a:hover {
+      text-decoration: underline;
+    }
+
+    .NoTab-reader-content blockquote {
+      border-left: 3px solid var(--tooltip-border);
+      margin-left: 0;
+      padding-left: 1em;
+      color: var(--tooltip-summary-text);
+    }
+
+    .NoTab-reader-content code, 
+    .NoTab-reader-content pre {
+      background-color: var(--tooltip-summary-bg);
+      border-radius: 3px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+
+    .NoTab-reader-content code {
+      padding: 0.2em 0.4em;
+      font-size: 0.9em;
+    }
+
+    .NoTab-reader-content pre {
+      padding: 1em;
+      overflow-x: auto;
+    }
+
+    /* 移除媒体查询，改为使用CSS变量自适应深色模式 */
+    /* @media (prefers-color-scheme: dark) {
+      .NoTab-reader-content {
+        color: #eee;
+        background-color: #222;
+      }
+      
+      .NoTab-reader-content a {
+        color: #61afef;
+      }
+      
+      .NoTab-reader-content blockquote {
+        border-left-color: #444;
+        color: #aaa;
+      }
+      
+      .NoTab-reader-content code, 
+      .NoTab-reader-content pre {
+        background-color: #2c2c2c;
+      }
+    } */
+
+    .NoTab-link-tooltip-loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--tooltip-loading-bg);
+      border-radius: 0 0 12px 12px;
+      backdrop-filter: blur(4px);
+      z-index: 1; /* Ensure loading is above iframe */
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--tooltip-border);
+      border-top: 2px solid var(--tooltip-action-active-bg);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 8px;
+    }
+
+    .loading-spinner + p {
+      font-size: 13px;
+      color: var(--tooltip-loading-text);
+      margin: 0;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .NoTab-link-tooltip-resize-handle {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 16px;
+      height: 16px;
+      cursor: nwse-resize;
+      border-radius: 0 0 12px 0;
+      transition: background 0.2s;
+      z-index: 2; /* Ensure handle is above iframe */
+      border-bottom: 16px solid var(--tooltip-resize-handle-border);
+      border-left: 16px solid transparent;
+
+    }
+
+    .NoTab-link-tooltip-resize-handle:hover {
+      border-bottom-color: var(--tooltip-resize-handle-hover-border);
+    }
+
+    .NoTab-link-tooltip-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .NoTab-link-tooltip-progress.notab-loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #4a90e2, transparent);
+      animation: progress 1.5s ease-in-out infinite;
+    }
+
+    @keyframes progress {
+      0% {
+        left: -50%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .NoTab-link-tooltip-body {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 42px); /* 减去header高度 */
+    }
+
+    .NoTab-link-tooltip-summary {
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+      max-height: 120px; /* 减小摘要区域高度 */
+      overflow-y: auto;
+      background-color: #fafafa;
+      flex-shrink: 0;
+    }
+
+    .NoTab-link-tooltip-iframe-container {
+      flex: 1;
+      position: relative;
+      padding: 0 1px 1px 1px;
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+    }
+
+    /* 新增：剩余次数样式 */
+    .NoTab-remaining-previews {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--tooltip-remaining-previews-text); /* Use variable */
+      background-color: var(--tooltip-remaining-previews-bg); /* Use variable */
+      padding: 3px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      flex-shrink: 0; /* 防止被压缩 */
+      white-space: nowrap; /* 防止换行 */
+      margin-right: 6px; /* 添加右侧间距 */
+    }
+    .NoTab-remaining-previews:hover {
+      background-color: var(--tooltip-remaining-previews-hover-bg); /* Use variable */
+      color: var(--tooltip-remaining-previews-hover-text); /* Use variable */
+    }
+    .NoTab-preview-icon {
+      font-size: 14px; /* 图标大小 */
+      line-height: 1;
+    }
+
+    .NoTab-long-press-loader {
+      position: fixed;
+      width: 36px; /* slightly larger than spinner */
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000000; /* Ensure it's on top */
+      pointer-events: none; /* Don't interfere with mouse events */
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+      transform: translate(-50%, -50%); /* Center the loader on the cursor */
+    }
+    /* Reuse existing spinner style */
+    .NoTab-long-press-loader .loading-spinner {
+       margin: 0; /* Reset margin if needed */
+       width: 24px; /* Smaller spinner */
+       height: 24px;
+       border-width: 2px;
+    }
+
+    /* Define color variables for themes */
+    .NoTab-link-tooltip.theme-light {
+      --tooltip-bg: #ffffff;
+      --tooltip-text: #333333;
+      --tooltip-header-bg: #f5f5f5;
+      --tooltip-header-text: #333333;
+      --tooltip-border: #e0e0e0;
+      --tooltip-link-bg: #ffffff;
+      --tooltip-link-border: #cccccc;
+      --tooltip-link-hover-border: #aaaaaa;
+      --tooltip-action-bg: #555555;
+      --tooltip-action-hover-bg: #111111;
+      --tooltip-action-active-bg: #007bff;
+      --tooltip-action-disabled-bg: #aaaaaa;
+      --tooltip-summary-bg: #fafafa;
+      --tooltip-summary-text: #333333;
+      --tooltip-loading-bg: rgba(255, 255, 255, 0.95);
+      --tooltip-loading-text: #666666;
+      --tooltip-resize-handle-border: rgba(0, 0, 0, 0.1);
+      --tooltip-resize-handle-hover-border: rgba(0, 0, 0, 0.2);
+      --tooltip-remaining-previews-bg: #eee;
+      --tooltip-remaining-previews-text: #666;
+      --tooltip-remaining-previews-hover-bg: #ddd;
+      --tooltip-remaining-previews-hover-text: #333;
+      --tooltip-limit-message-text: #333;
+      --tooltip-limit-footnote-text: #666;
+      --tooltip-upgrade-button-bg:rgb(249, 171, 3);
+      --tooltip-upgrade-button-text: white;
+    }
+
+    .NoTab-link-tooltip.theme-dark {
+      --tooltip-bg:rgb(60, 60, 60);
+      --tooltip-text: #e0e0e0;
+      --tooltip-header-bg:rgb(48, 48, 48);
+      --tooltip-header-text: #e0e0e0;
+      --tooltip-border: #444444;
+      --tooltip-link-bg: #3c3c3c;
+      --tooltip-link-border: #555555;
+      --tooltip-link-hover-border: #777777;
+      --tooltip-action-bg: #cccccc; /* Light icons on dark bg */
+      --tooltip-action-hover-bg: #eeeeee;
+      --tooltip-action-active-bg: #00aaff; /* Brighter blue */
+      --tooltip-action-disabled-bg: #666666;
+      --tooltip-summary-bg: #252525;
+      --tooltip-summary-text: #cccccc;
+      --tooltip-loading-bg: rgba(45, 45, 45, 0.95);
+      --tooltip-loading-text: #cccccc;
+      --tooltip-resize-handle-border: rgba(255, 255, 255, 0.1);
+      --tooltip-resize-handle-hover-border: rgba(255, 255, 255, 0.2);
+      --tooltip-remaining-previews-bg: #444;
+      --tooltip-remaining-previews-text: #ccc;
+      --tooltip-remaining-previews-hover-bg: #555;
+      --tooltip-remaining-previews-hover-text: #eee;
+      --tooltip-limit-message-text: #e0e0e0;
+      --tooltip-limit-footnote-text: #aaa;
+      --tooltip-upgrade-button-bg: rgb(249, 171, 3);
+      --tooltip-upgrade-button-text: #111;
+    }
+
+    .NoTab-link-tooltip.theme-gray {
+      --tooltip-bg: #f0f0f0;
+      --tooltip-text: #333333;
+      --tooltip-header-bg: #e0e0e0;
+      --tooltip-header-text: #333333;
+      --tooltip-border: #cccccc;
+      --tooltip-link-bg: #ffffff;
+      --tooltip-link-border: #bbbbbb;
+      --tooltip-link-hover-border: #999999;
+      --tooltip-action-bg: #666666;
+      --tooltip-action-hover-bg: #222222;
+      --tooltip-action-active-bg: #007bff;
+      --tooltip-action-disabled-bg: #aaaaaa;
+      --tooltip-summary-bg: #e5e5e5;
+      --tooltip-summary-text: #333333;
+      --tooltip-loading-bg: rgba(240, 240, 240, 0.95);
+      --tooltip-loading-text: #555555;
+      --tooltip-resize-handle-border: rgba(0, 0, 0, 0.1);
+      --tooltip-resize-handle-hover-border: rgba(0, 0, 0, 0.2);
+      --tooltip-remaining-previews-bg: #ccc;
+      --tooltip-remaining-previews-text: #555;
+      --tooltip-remaining-previews-hover-bg: #bbb;
+      --tooltip-remaining-previews-hover-text: #333;
+      --tooltip-limit-message-text: #333;
+      --tooltip-limit-footnote-text: #555;
+      --tooltip-upgrade-button-bg: rgb(249, 171, 3);
+      --tooltip-upgrade-button-text: white;
+    }
+
+    /* Update existing styles to use variables */
+    .NoTab-link-tooltip {
+      /* ... */
+      background: var(--tooltip-bg);
+      /* ... */
+    }
+
+    .NoTab-link-tooltip-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .NoTab-link-tooltip-content {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+      border-radius: 12px; /* Apply border-radius here */
+      background: var(--tooltip-bg); /* Use variable */
+    }
+
+    /* Updated Header Styles */
+    .NoTab-link-tooltip-header {
+      /* ... */
+      background: var(--tooltip-header-bg);
+      border-bottom: 1px solid var(--tooltip-border);
+      /* ... */
+    }
+
+    /* New Link Group Styles */
+    .NoTab-link-tooltip-link-group {
+      /* ... */
+      border: 1px solid var(--tooltip-link-border);
+      background-color: var(--tooltip-link-bg);
+      /* ... */
+    }
+    .NoTab-link-tooltip-link-group:hover {
+       border-color: var(--tooltip-link-hover-border);
+    }
+
+
+    /* Updated Title Styles */
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title { /* Increased specificity */
+      font-size: 13px;
+      font-weight: normal;
+      color: var(--tooltip-header-text); /* Use variable */
+      white-space: nowrap; /* 强制单行 */
+      overflow: hidden;
+      margin-left: 10px;
+      text-overflow: ellipsis; /* 超出部分显示省略号 */
+      text-decoration: none; /* Remove underline from link */
+      cursor: pointer; /* Indicate it's clickable */
+      flex: 1; /* Allow title to take space */
+      min-width: 0; /* Prevent overflow */
+      line-height: 1.4; /* Adjust line height */
+      display: block; /* 确保ellipsis生效 */
+      width: 100%; /* 确保ellipsis生效 */
+    }
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title:hover { /* Increased specificity */
+       color: #007bff; /* Change color on hover */
+    }
+    .NoTab-link-tooltip-link-group .NoTab-link-tooltip-title:visited { /* Increased specificity */
+      color: var(--tooltip-header-text); /* Prevent visited link color change */
+    }
+
+    /* Updated Actions Styles */
+    .NoTab-link-tooltip-actions {
+      /* ... */
+    }
+
+    /* General Action Button Styles */
+    .NoTab-link-tooltip-action {
+      /* ... */
+      background-color: var(--tooltip-action-bg); /* Use variable */
+      /* ... */
+    }
+
+    .NoTab-link-tooltip-action:hover {
+      background-color: var(--tooltip-action-hover-bg); /* Use variable */
+      /* color: #333; /* Darker icon color on hover */ */ /* Removed color */
+    }
+
+    .NoTab-link-tooltip-action.active {
+      /* color: #1976d2; /* Use color for the icon */ */ /* Removed color */
+      background-color: var(--tooltip-action-active-bg); /* Use variable */
+    }
+
+    .NoTab-link-tooltip-action.disabled {
+      background-color: var(--tooltip-action-disabled-bg); /* Use variable */
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    /* Specific button styles with SVG masks */
+    /* Keep mask definitions as they are color-independent */
+    .NoTab-link-tooltip-pin {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='none' stroke='currentColor' stroke-width='50'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='none' stroke='currentColor' stroke-width='50'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    .NoTab-link-tooltip-pin.active {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='currentColor'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024' fill='currentColor'%3E%3Cpath d='M629.6 843l41.9-219 135.8-135.8 15.8 15.8c16.2 16.2 42.6 16.2 58.8 0 16.2-16.2 16.2-42.6 0-58.8L578.8 142c-16.2-16.2-42.6-16.2-58.8 0-16.2 16.2-16.2 42.6 0 58.8l15.8 15.8L400 352.5l-219 41.9c-3.1 0.6-6 2.1-8.3 4.4l-21.6 21.6c-12.5 12.5-12.5 32.8 0 45.3l174.2 174.2L142 823.1c-16.2 16.2-16.2 42.6 0 58.8 16.2 16.2 42.6 16.2 58.8 0l183.3-183.3 174.2 174.2c12.5 12.5 32.8 12.5 45.3 0l21.6-21.6c2.3-2.2 3.8-5 4.4-8.2z'%3E%3C/path%3E%3C/svg%3E");
+      /* background-color: #007bff; /* Brighter blue for active pin */ */ /* Controlled by variable now */
+    }
+
+    .NoTab-link-tooltip-refresh {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-reader-mode {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1'%3E%3C/path%3E%3Cpath d='M10 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'%3E%3C/path%3E%3Cline x1='8' y1='10' x2='17' y2='10'%3E%3C/line%3E%3Cline x1='8' y1='14' x2='17' y2='14'%3E%3C/line%3E%3Cline x1='8' y1='18' x2='12' y2='18'%3E%3C/line%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1'%3E%3C/path%3E%3Cpath d='M10 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'%3E%3C/path%3E%3Cline x1='8' y1='10' x2='17' y2='10'%3E%3C/line%3E%3Cline x1='8' y1='14' x2='17' y2='14'%3E%3C/line%3E%3Cline x1='8' y1='18' x2='12' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-open {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    .NoTab-link-tooltip-close {
+      /* font-size: 20px; /* Larger close icon */ */ /* Removed font-size */
+      /* font-weight: 300; */ /* Removed font-weight */
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E"); /* Slightly thicker stroke */
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    /* Tooltip for Action Buttons */
+    .NoTab-link-tooltip-action::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 110%; /* Position above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      font-size: 11px; /* Smaller font size */
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s 0.1s, visibility 0.2s 0.1s; /* Added delay */
+      pointer-events: none;
+    }
+
+    .NoTab-link-tooltip-action:hover::after {
+      opacity: 1;
+      visibility: visible;
+      /* bottom: -25px; Adjusted position if needed */
+    }
+
+
+    .NoTab-link-tooltip-body {
+      flex: 1; /* Allow body to take remaining space */
+      display: flex;
+      flex-direction: column;
+      height: 100%; /* Ensure body fills available height */
+      width: 100%;
+      background: var(--tooltip-bg); /* Use variable */
+      min-height: 0; /* Prevent body from overflowing */
+    }
+
+    .NoTab-limit-message {
+      padding: 12px 16px;
+      font-size: 18px;
+      color: var(--tooltip-limit-message-text); /* Use variable */
+    }
+
+    .NoTab-link-tooltip-summary {
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--tooltip-summary-text); /* Use variable */
+      border-bottom: 1px solid var(--tooltip-border); /* Use variable */
+      max-height: 150px;
+      overflow-y: auto;
+      background-color: var(--tooltip-summary-bg); /* Use variable */
+      flex-shrink: 0; /* Prevent summary from shrinking */
+    }
+
+    .NoTab-link-tooltip-iframe-container {
+      flex: 1;
+      position: relative;
+      padding: 0 1px 1px 1px;
+      background: var(--tooltip-bg); /* Use variable */
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .NoTab-link-tooltip-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: var(--tooltip-bg); /* Use variable */
+    }
+
+    .NoTab-link-tooltip-reader-container {
+      flex: 1;
+      position: relative;
+      padding: 0;
+      background: var(--tooltip-bg);
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .NoTab-link-tooltip-video-container { /* 新增视频播放器容器样式 */
+      flex: 1;
+      position: relative;
+      background: var(--tooltip-bg); /* 使用变量 */
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden; /* 隐藏iframe边框带来的额外空间 */
+      display: none; /* 默认隐藏 */
+    }
+
+    .NoTab-link-tooltip-video-iframe { /* 新增视频播放器iframe样式 */
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000; /* 视频背景通常为黑色 */
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 8px;
+    }
+
+    .loading-spinner + p {
+      font-size: 13px;
+      color: var(--tooltip-loading-text); /* Use variable */
+      margin: 0;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .NoTab-link-tooltip-resize-handle {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 16px;
+      height: 16px;
+      cursor: nwse-resize;
+      border-radius: 0 0 12px 0;
+      transition: background 0.2s;
+      z-index: 2; /* Ensure handle is above iframe */
+      border-bottom: 16px solid var(--tooltip-resize-handle-border);
+      border-left: 16px solid transparent;
+    }
+
+    .NoTab-link-tooltip-resize-handle:hover {
+      border-bottom-color: var(--tooltip-resize-handle-hover-border);
+    }
+
+    .NoTab-link-tooltip-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .NoTab-link-tooltip-progress.notab-loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #4a90e2, transparent);
+      animation: progress 1.5s ease-in-out infinite;
+    }
+
+    @keyframes progress {
+      0% {
+        left: -50%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .NoTab-link-tooltip-body {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 42px); /* 减去header高度 */
+    }
+
+    .NoTab-link-tooltip-summary {
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+      max-height: 120px; /* 减小摘要区域高度 */
+      overflow-y: auto;
+      background-color: #fafafa;
+      flex-shrink: 0;
+    }
+
+    .NoTab-link-tooltip-iframe-container {
+      flex: 1;
+      position: relative;
+      padding: 0 1px 1px 1px;
+      min-height: 0;
+      border-radius: 0 0 12px 12px;
+    }
+
+    /* 新增：剩余次数样式 */
+    .NoTab-remaining-previews {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--tooltip-remaining-previews-text); /* Use variable */
+      background-color: var(--tooltip-remaining-previews-bg); /* Use variable */
+      padding: 3px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      flex-shrink: 0; /* 防止被压缩 */
+      white-space: nowrap; /* 防止换行 */
+      margin-right: 6px; /* 添加右侧间距 */
+    }
+    .NoTab-remaining-previews:hover {
+      background-color: var(--tooltip-remaining-previews-hover-bg); /* Use variable */
+      color: var(--tooltip-remaining-previews-hover-text); /* Use variable */
+    }
+    .NoTab-preview-icon {
+      font-size: 14px; /* 图标大小 */
+      line-height: 1;
+    }
+
+    .NoTab-long-press-loader {
+      position: fixed;
+      width: 36px; /* slightly larger than spinner */
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000000; /* Ensure it's on top */
+      pointer-events: none; /* Don't interfere with mouse events */
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+      transform: translate(-50%, -50%); /* Center the loader on the cursor */
+    }
+    /* Reuse existing spinner style */
+    .NoTab-long-press-loader .loading-spinner {
+       margin: 0; /* Reset margin if needed */
+       width: 24px; /* Smaller spinner */
+       height: 24px;
+       border-width: 2px;
+    }
+
+    .NoTab-link-tooltip-video-mode { /* 新增视频模式按钮样式 */
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.66 5H5.34A3.34 3.34 0 0 0 2 8.34v7.32A3.34 3.34 0 0 0 5.34 19h13.32A3.34 3.34 0 0 0 22 15.66V8.34A3.34 3.34 0 0 0 18.66 5m-8 0h2.68'%3E%3C/path%3E%3Cpath d='M10 15l5-3-5-3v6z'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.66 5H5.34A3.34 3.34 0 0 0 2 8.34v7.32A3.34 3.34 0 0 0 5.34 19h13.32A3.34 3.34 0 0 0 22 15.66V8.34A3.34 3.34 0 0 0 18.66 5m-8 0h2.68'%3E%3C/path%3E%3Cpath d='M10 15l5-3-5-3v6z'%3E%3C/path%3E%3C/svg%3E");
+    }
+  </style></head>
+<body><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57DQX32B"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->
+<h1>Game Tebak Angka</h1>
+
+<p>Tebak angka dari <strong>1 sampai 10000</strong>!</p>
+
+<p><input id="guessInput" max="10000" min="1" type="number"><button onclick="checkGuess()">Tebak</button></p>
+
+<p id="result"></p>
+
+<p id="attempts"></p>
+
+<div id="formSection" style="display:none;">
+<p>Masukkan Nama:</p>
+<input id="playerName" type="text"><button onclick="submitScore()">Kirim ke Leaderboard</button></div>
+
+<h2>🏆 Top 10 Leaderboard</h2>
+
+<table id="leaderboard">
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>Nama</th>
+			<th>Percobaan</th>
+			<th>Waktu</th>
+		</tr>
+	</thead>
+	<tbody><tr>
+              <td>#1</td>
+              <td>NotGibran (yang bikin)</td>
+              <td>1</td>
+              <td>10/04/2025, 14.56.42</td>
+            </tr><tr>
+              <td>#2</td>
+              <td>ZIKKジ</td>
+              <td>2</td>
+              <td>11/04/2025, 18.37.36</td>
+            </tr><tr>
+              <td>#3</td>
+              <td>Wong Jowo</td>
+              <td>7</td>
+              <td>11/06/2025, 17.30.09</td>
+            </tr><tr>
+              <td>#4</td>
+              <td>Orang</td>
+              <td>13</td>
+              <td>26/04/2025, 13.23.48</td>
+            </tr><tr>
+              <td>#5</td>
+              <td>Sigmaffin</td>
+              <td>21</td>
+              <td>11/04/2025, 11.39.41</td>
+            </tr><tr>
+              <td>#6</td>
+              <td>Ayu</td>
+              <td>24</td>
+              <td>14/05/2025, 17.06.08</td>
+            </tr><tr>
+              <td>#7</td>
+              <td>Nzm</td>
+              <td>33</td>
+              <td>10/04/2025, 19.14.13</td>
+            </tr></tbody>
+</table>
+
+<p><button id="restartBtn" onclick="restartGame()">Main Lagi</button><script>
     let answer = Math.floor(Math.random() * 10000) + 1;
     let tries = 0;
     let win = false;
@@ -80,7 +1160,7 @@
       let color = "";
 
       if (guess === answer) {
-        resultText = 🎉 Selamat! Jawabannya ${answer}. Kamu benar!;
+        resultText = `🎉 Selamat! Jawabannya ${answer}. Kamu benar!`;
         color = "green";
         document.getElementById("formSection").style.display = 'block';
         document.getElementById("restartBtn").style.display = 'inline-block';
@@ -101,7 +1181,7 @@
 
       document.getElementById("result").textContent = resultText;
       document.getElementById("result").style.color = color;
-      document.getElementById("attempts").textContent = Percobaan: ${tries};
+      document.getElementById("attempts").textContent = `Percobaan: ${tries}`;
     }
 
     function submitScore() {
@@ -155,42 +1235,15 @@
     }
 
     fetchLeaderboard();
+  </script></p>
 
-    // 🔥 Dark mode toggle fix
-    const toggle = document.getElementById('theme-toggle');
-    const body = document.body;
+<p class="footer">Powered by <strong>Vercel</strong>, <strong>GitHub</strong>, <strong>Cloudflare&nbsp;</strong>and <strong>Google</strong></p>
+	<a href="https://api.whatsapp.com/send?text=Bisakah%20Anda%20mengalahkanku?%20😎😎.%20Kalau%20ya,%20coba%20ini:%20https://notgibran.my.id" target="_blank">
+		<button style="background-color: #25D366; color: white; padding: 12px 24px; border: none ; border-radius: 8px; font-size: 16px; cursor: pointer;">
+			Share ke WhatsApp 💬
+		</button>
+	</a>
 
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.add('dark-mode');
-      toggle.checked = true;
-    }
 
-    toggle.addEventListener('change', () => {
-      if (toggle.checked) {
-        body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-      }
-    });
-    fetch("https://ipapi.co/json/")
-  .then(res => res.json())
-  .then(data => {
-    const payload = {
-      ip: data.ip,
-      country: data.country_name,
-      city: data.city,
-      org: data.org,
-      datetime: new Date().toLocaleString()
-    };
-
-    fetch("https://script.google.com/macros/s/AKfycbxRkBI6EUY0Lf-g9Kxs1MbjOeTk3F4uw-D-FEwTh2bq7IX8lG7zXUyheNcI-oe4kv5W0w/exec", {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" }
-    });
-  });
-  </script>
 </body>
 </html>

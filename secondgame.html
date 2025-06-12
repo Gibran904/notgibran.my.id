@@ -26,14 +26,14 @@
   <h1>Game Tebak Angka - Multiplayer</h1>
 
   <div id="setup">
-    <p><strong>Player 1:</strong> Masukkan angka rahasia (1 - 100000):</p>
+    <p><strong>Player 1:</strong> Masukkan angka rahasia (1 - 1000):</p>
     <input type="number" id="secretInput" min="1" max="1000">
     <button onclick="startGame()">Mulai Tebakan</button>
   </div>
 
   <div id="game" class="hidden">
-    <p><strong>Player 2:</strong> Tebak angka dari 1 sampai 100000</p>
-    <input type="number" id="guessInput" min="1" max="100000">
+    <p><strong>Player 2:</strong> Tebak angka dari 1 sampai 1000</p>
+    <input type="number" id="guessInput" min="1" max="1000">
     <button onclick="checkGuess()">Tebak</button>
     <p id="result"></p>
     <p id="attempt"></p>

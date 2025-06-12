@@ -1,6 +1,0 @@
-[04-Jun-2025 02:04:00 UTC] PHP Notice:  Undefined variable: email in /home/qfaidmte/public_html/bot-tester/simpan.php on line 13
-[04-Jun-2025 02:08:47 UTC] PHP Notice:  Undefined index: nama in /home/qfaidmte/public_html/bot-tester/simpan.php on line 2
-[04-Jun-2025 02:08:47 UTC] PHP Notice:  Undefined index: wa in /home/qfaidmte/public_html/bot-tester/simpan.php on line 3
-[04-Jun-2025 02:08:47 UTC] PHP Notice:  Undefined index: email in /home/qfaidmte/public_html/bot-tester/simpan.php on line 4
-[04-Jun-2025 02:08:47 UTC] PHP Notice:  Undefined index: alasan in /home/qfaidmte/public_html/bot-tester/simpan.php on line 5
-[04-Jun-2025 02:08:47 UTC] PHP Notice:  Undefined index: waktu in /home/qfaidmte/public_html/bot-tester/simpan.php on line 6

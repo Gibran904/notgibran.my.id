@@ -1146,7 +1146,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       document.getElementById("result").textContent = resultText;
       document.getElementById("result").style.color = color;
-      document.getElementById("attempts").textContent = `Percobaan: ${tries}`;
+      document.getElementById("attempts").textContent = `Attempt: ${tries}`;
     }
 
     function submitScore() {
@@ -1155,7 +1155,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!name) return alert("Isi nama dulu!");
       const formData = new FormData();
       formData.append("nama", name);
-      formData.append("percobaan", tries);
+      formData.append("attempt", tries);
 
       fetch("https://script.google.com/macros/s/AKfycbxRkBI6EUY0Lf-g9Kxs1MbjOeTk3F4uw-D-FEwTh2bq7IX8lG7zXUyheNcI-oe4kv5W0w/exec", {
         method: "POST",
@@ -1202,7 +1202,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     fetchLeaderboard();
   </script></p>
 
-<p class="footer">Powered by <strong>Vercel</strong>, <strong>GitHub</strong>, <strong>Cloudflare&nbsp;</strong>and <strong>Google</strong></p>
+<p class="footer">Powered by <strong>Vercel</strong>, <strong>GitHub</strong>, <strong>Cloudflare</strong>and <strong>Google</strong></p>
 	<a href="https://api.whatsapp.com/send?text=Bisakah%20Anda%20mengalahkanku?%20😎😎.%20Kalau%20ya,%20coba%20ini:%20https://notgibran.my.id" target="_blank">
 		<button style="background-color: #25D366; color: white; padding: 12px 24px; border: none ; border-radius: 8px; font-size: 16px; cursor: pointer;">
 			Share ke WhatsApp 💬
